@@ -1,6 +1,7 @@
 package Persistencia;
 
 import Dominio.Huesped;
+import Utils.AppSQLException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -25,17 +26,40 @@ public class PHuesped {
                 h.getTelefono(),
                 h.getPais()
         ));
-        return conexion.consulta(sql, parametros);
+        try{
+            if(conexion.consulta(sql, parametros)){
+                System.out.println("Se agregó el huesped con éxito");
+                return true;
+            }
+            System.out.println("Existió un problema al agregar el huesped");
+            return false;
+        }
+        catch(AppSQLException e){
+            System.out.println(e.getMessage());
+        }
+        return false;
     }
 
     public static boolean eliminarHuesped(int idHuesped) {
         String sql = "DELETE FROM huesped WHERE idhuesped = ?";
         ArrayList<Object> parametros = new ArrayList<>(Arrays.asList(idHuesped));
-        return conexion.consulta(sql, parametros);
+        try{
+            if(conexion.consulta(sql, parametros)){
+                System.out.println("Se eliminó el huesped con éxito");
+                return true;
+            }
+            System.out.println("Existió un problema al eliminar el huesped");
+            return false;
+        }
+        catch(AppSQLException e){
+            System.out.println(e.getMessage());
+        }
+        return false;
     }
 
     public static ArrayList<Huesped> listarHuesped() {
         String sql = "SELECT idhuesped, nombre, apaterno, amaterno, tipo_documento, num_documento, fecha_nacimiento, telefono, pais FROM huesped";
+        try {
         List<List<Object>> resultado = conexion.seleccion(sql, null);
         ArrayList<Huesped> huespedes = new ArrayList<>();
         for (List<Object> registro : resultado) {
@@ -52,6 +76,11 @@ public class PHuesped {
             huespedes.add(new Huesped(idHuesped, nombre, apaterno, amaterno, tipoDocumento, numDocumento, fechaNacimiento, telefono, pais));
         }
         return huespedes;
+        }
+        catch(AppSQLException e){
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 
     public static boolean modificarHuesped(Huesped h) {
@@ -68,11 +97,23 @@ public class PHuesped {
                 h.getPais(),
                 h.getIdhuesped()
         ));
-        return conexion.consulta(sql, parametros);
+        try{
+            if(conexion.consulta(sql, parametros)){
+                System.out.println("Se modificó el huesped con éxito");
+                return true;
+            }
+            System.out.println("Existió un problema al modificar el huesped");
+            return false;
+        }
+        catch(AppSQLException e){
+            System.out.println(e.getMessage());
+        }
+        return false;
     }
 
     public static Huesped buscarHuesped(int idHuesped) {
         String sql = "SELECT idhuesped, nombre, apaterno, amaterno, tipo_documento, num_documento, fecha_nacimiento, telefono, pais FROM huesped WHERE idhuesped = ?";
+        try{
         ArrayList<Object> parametros = new ArrayList<>(Arrays.asList(idHuesped));
         for (List<Object> registro : conexion.seleccion(sql, parametros)) {
             String nombre = String.valueOf(registro.get(1));
@@ -85,6 +126,10 @@ public class PHuesped {
             String pais = String.valueOf(registro.get(8));
 
             return new Huesped(idHuesped, nombre, apaterno, amaterno, tipoDocumento, numDocumento, fechaNacimiento, telefono, pais);
+        }
+        }
+        catch(AppSQLException e){
+            System.out.println(e.getMessage());
         }
         return null;
     }

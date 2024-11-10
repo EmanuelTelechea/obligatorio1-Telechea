@@ -4,6 +4,7 @@ import Dominio.Habitacion;
 import Dominio.Huesped;
 import Dominio.Reserva;
 import Dominio.Tarifa;
+import Utils.AppSQLException;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -23,7 +24,18 @@ public class PTarifa {
                 t.getFechaInicio(),
                 t.getFechaFin()
         ));
-        return conexion.consulta(sql, parametros);
+        try{
+            if(conexion.consulta(sql, parametros)){
+                System.out.println("Se agregó la tarifa con éxito");
+                return true;
+            }
+            System.out.println("Existió un problema al agregar la tarifa");
+            return false;
+        }
+        catch(AppSQLException e){
+            System.out.println(e.getMessage());
+        }
+        return false;
     }
 
     public static boolean modificarTarifa(Tarifa t) {
@@ -34,18 +46,41 @@ public class PTarifa {
                 t.getFechaFin(),
                 t.getIdTarifa()
         ));
-        return conexion.consulta(sql, parametros);
+        try{
+            if(conexion.consulta(sql, parametros)){
+                System.out.println("Se modificó la tarifa con éxito");
+                return true;
+            }
+            System.out.println("Existió un problema al modificar la tarifa");
+            return false;
+        }
+        catch(AppSQLException e){
+            System.out.println(e.getMessage());
+        }
+        return false;
     }
 
     public static boolean eliminarTarifa(int idTarifa) {
         String sql = "DELETE FROM tarifa WHERE idTarifa = ?";
         ArrayList<Object> parametros = new ArrayList<>(Arrays.asList(idTarifa));
-        return conexion.consulta(sql, parametros);
+        try{
+            if(conexion.consulta(sql, parametros)){
+                System.out.println("Se eliminó la tarifa con éxito");
+                return true;
+            }
+            System.out.println("Existió un problema al eliminar la tarifa");
+            return false;
+        }
+        catch(AppSQLException e){
+            System.out.println(e.getMessage());
+        }
+        return false;
     }
 
     public static ArrayList<Tarifa> listarTarifas() {
         String sql = "SELECT idTarifa, idhabitacion, precio, fechaInicio, fechaFin FROM tarifa";
-        List<List<Object>> resultado = conexion.seleccion(sql, null);
+        try {
+            List<List<Object>> resultado = conexion.seleccion(sql, null);
         ArrayList<Tarifa> tarifas = new ArrayList<>();
         for (List<Object> registro : resultado) {
             int idTarifa = (int) registro.get(0);
@@ -58,10 +93,16 @@ public class PTarifa {
             tarifas.add(new Tarifa(idTarifa, habitacion, precio, fechaInicio, fechaFin));
         }
         return tarifas;
-    }
+        }
+            catch(AppSQLException e){
+            System.out.println(e.getMessage());
+        }
+            return null;
+        }
 
     public static Tarifa buscarTarifa(int idTarifa) {
         String sql = "SELECT * FROM tarifa WHERE idTarifa = ?";
+        try{
         ArrayList<Object> parametros = new ArrayList<>(Arrays.asList(idTarifa));
         List<List<Object>> resultado = conexion.seleccion(sql, parametros);
         for (List<Object> registro : resultado) {
@@ -73,13 +114,17 @@ public class PTarifa {
 
             return new Tarifa(tarifa, habitacion, precio, fechaInicio, fechaFin);
         }
+        }
+        catch(AppSQLException e){
+            System.out.println(e.getMessage());
+        }
         return null;
     }
 
     public static List<Tarifa> obtenerTarifasVigentes(Habitacion habitacion, LocalDate fechaInicio, LocalDate fechaFin) {
         String sql = "SELECT * FROM tarifa WHERE idhabitacion = ? AND (fechaInicio <= ? AND (fechaFin IS NULL OR fechaFin >= ?))";
+        try{
         ArrayList<Object> parametros = new ArrayList<>(Arrays.asList(habitacion.getIdHabitacion(), fechaFin, fechaInicio));
-
         List<List<Object>> resultados = conexion.seleccion(sql, parametros);
         List<Tarifa> tarifas = new ArrayList<>();
 
@@ -91,6 +136,11 @@ public class PTarifa {
             tarifas.add(new Tarifa(idTarifa, habitacion, precio, vigenciaInicio, vigenciaFin));
         }
         return tarifas;
+        }
+        catch(AppSQLException e){
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 
 }

@@ -5,6 +5,7 @@ import Dominio.Hotel;
 import Dominio.Huesped;
 import Dominio.Reserva;
 import Persistencia.Conexion;
+import Utils.AppSQLException;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -28,17 +29,40 @@ public class PReserva {
                 r.isPagada(),
                 r.getCostoTotal()
         ));
-        return conexion.consulta(sql, parametros);
+        try{
+            if(conexion.consulta(sql, parametros)){
+                System.out.println("Se agregó la reserva con éxito");
+                return true;
+            }
+            System.out.println("Existió un problema al agregar la reserva");
+            return false;
+        }
+        catch(AppSQLException e){
+            System.out.println(e.getMessage());
+        }
+        return false;
     }
 
     public static boolean eliminarReserva(int idReserva) {
         String sql = "DELETE FROM reserva WHERE idReserva = ?";
         ArrayList<Object> parametros = new ArrayList<>(Arrays.asList(idReserva));
-        return conexion.consulta(sql, parametros);
+        try{
+            if(conexion.consulta(sql, parametros)){
+                System.out.println("Se eliminó la reserva con éxito");
+                return true;
+            }
+            System.out.println("Existió un problema al eliminar la reserva");
+            return false;
+        }
+        catch(AppSQLException e){
+            System.out.println(e.getMessage());
+        }
+        return false;
     }
 
     public static ArrayList<Reserva> listarReservas() {
         String sql = "SELECT idReserva, idhuesped, idhabitacion, fechaReserva, fechaEntrada, fechaSalida, pagada, costoTotal FROM reserva";
+        try {
         List<List<Object>> resultado = conexion.seleccion(sql, null);
         ArrayList<Reserva> reservas = new ArrayList<>();
         for (List<Object> registro : resultado) {
@@ -56,7 +80,12 @@ public class PReserva {
             reservas.add(new Reserva(huesped, habitacion, fechaReserva, fechaEntrada, fechaSalida, pagada, costoTotal));
         }
         return reservas;
-    }
+        }
+            catch(AppSQLException e){
+            System.out.println(e.getMessage());
+        }
+            return null;
+        }
 
     public static boolean modificarReserva(Reserva r) {
         String sql = "UPDATE reserva SET idhuesped = ?, idhabitacion = ?, fechaReserva = ?, fechaEntrada = ?, fechaSalida = ?, pagada = ? WHERE idReserva = ?";
@@ -69,11 +98,23 @@ public class PReserva {
                 r.isPagada(),
                 r.getIdReserva()
         ));
-        return conexion.consulta(sql, parametros);
+        try{
+            if(conexion.consulta(sql, parametros)){
+                System.out.println("Se modificó la huesped con éxito");
+                return true;
+            }
+            System.out.println("Existió un problema al modificar la huesped");
+            return false;
+        }
+        catch(AppSQLException e){
+            System.out.println(e.getMessage());
+        }
+        return false;
     }
 
     public static Reserva buscarReserva(int idReserva) {
         String sql = "SELECT * FROM reserva WHERE idReserva = ?";
+        try {
         ArrayList<Object> parametros = new ArrayList<>(Arrays.asList(idReserva));
         for (List<Object> registro : conexion.seleccion(sql, parametros)) {
             int idHuesped = (int) registro.get(0);
@@ -88,7 +129,11 @@ public class PReserva {
 
             return new Reserva(huesped, habitacion, fechaReserva, fechaEntrada, fechaSalida, pagada, costoTotal);
         }
-        return null;
-    }
+        }
+        catch(AppSQLException e){
+            System.out.println(e.getMessage());
+        }
+            return null;
+        }
 }
 

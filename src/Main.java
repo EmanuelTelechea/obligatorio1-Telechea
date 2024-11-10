@@ -52,18 +52,17 @@ public class Main {
     }
 
     private static void menuHotel(){
-        System.out.println("MENU HOTEL");
-        System.out.println("1- Agregar Hotel");
-        System.out.println("2- Eliminar Hotel");
-        System.out.println("3- Modificar Hotel");
-        System.out.println("4- Ver Hoteles");
-        System.out.println("5- Ver Hoteles por nombre");
-        System.out.println("6- Ver Hoteles por ciudad");
-        System.out.println("7- Ver Hoteles por cantidad de estrellas");
-        System.out.println("8- Ver Hoteles por fecha");
-
         int opcion;
         do{
+            System.out.println("MENU HOTEL");
+            System.out.println("1- Agregar Hotel");
+            System.out.println("2- Eliminar Hotel");
+            System.out.println("3- Modificar Hotel");
+            System.out.println("4- Ver Hoteles");
+            System.out.println("5- Ver Hoteles por nombre");
+            System.out.println("6- Ver Hoteles por ciudad");
+            System.out.println("7- Ver Hoteles por cantidad de estrellas");
+            System.out.println("8- Ver Hoteles por fecha");
             System.out.println("Elige una opcion(-1 para salir)");
             opcion = Integer.parseInt(scanner.nextLine());
             switch (opcion){
@@ -105,17 +104,15 @@ public class Main {
     }
 
     private static void menuHabitacion(){
-        System.out.println("MENU HABITACION");
-        System.out.println("1- Agregar Habitacion");
-        System.out.println("2- Eliminar Habitacion");
-        System.out.println("3- Modificar Habitacion");
-        System.out.println("4- Ver Habitaciones");
-        System.out.println("5- Ver Habitaciones con reserva previa");
-        System.out.println("6- Ver Habitaciones sin reserva previa");
-
         int opcion;
         do{
-            menu();
+            System.out.println("MENU HABITACION");
+            System.out.println("1- Agregar Habitacion");
+            System.out.println("2- Eliminar Habitacion");
+            System.out.println("3- Modificar Habitacion");
+            System.out.println("4- Ver Habitaciones");
+            System.out.println("5- Ver Habitaciones con reserva previa");
+            System.out.println("6- Ver Habitaciones sin reserva previa");
             System.out.println("Elige una opcion(-1 para salir)");
             opcion = Integer.parseInt(scanner.nextLine());
             switch (opcion){
@@ -149,14 +146,13 @@ public class Main {
     }
 
     private static void menuHuesped(){
-        System.out.println("MENU Huesped");
-        System.out.println("1- Agregar Huesped");
-        System.out.println("2- Eliminar Huesped");
-        System.out.println("3- Modificar Huesped");
-        System.out.println("4- Ver Huespedes");
         int opcion;
         do{
-            menu();
+            System.out.println("MENU Huesped");
+            System.out.println("1- Agregar Huesped");
+            System.out.println("2- Eliminar Huesped");
+            System.out.println("3- Modificar Huesped");
+            System.out.println("4- Ver Huespedes");
             System.out.println("Elige una opcion(-1 para salir)");
             opcion = Integer.parseInt(scanner.nextLine());
             switch (opcion){
@@ -182,14 +178,13 @@ public class Main {
     }
 
     private static void menuReserva(){
-        System.out.println("MENU Reserva");
-        System.out.println("1- Agregar Reserva");
-        System.out.println("2- Eliminar Reserva");
-        System.out.println("3- Modificar Reserva");
-        System.out.println("4- Ver Reservas");
         int opcion;
         do{
-            menu();
+            System.out.println("MENU Reserva");
+            System.out.println("1- Agregar Reserva");
+            System.out.println("2- Eliminar Reserva");
+            System.out.println("3- Modificar Reserva");
+            System.out.println("4- Ver Reservas");
             System.out.println("Elige una opcion(-1 para salir)");
             opcion = Integer.parseInt(scanner.nextLine());
             switch (opcion){
@@ -215,14 +210,13 @@ public class Main {
     }
 
     private static void menuTarifa(){
-        System.out.println("MENU tarifa");
-        System.out.println("1- Agregar tarifa");
-        System.out.println("2- Eliminar tarifa");
-        System.out.println("3- Modificar tarifa");
-        System.out.println("4- Ver tarifas");
         int opcion;
         do{
-            menu();
+            System.out.println("MENU tarifa");
+            System.out.println("1- Agregar tarifa");
+            System.out.println("2- Eliminar tarifa");
+            System.out.println("3- Modificar tarifa");
+            System.out.println("4- Ver tarifas");
             System.out.println("Elige una opcion(-1 para salir)");
             opcion = Integer.parseInt(scanner.nextLine());
             switch (opcion){

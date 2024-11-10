@@ -27,5 +27,19 @@ public class Utilidades {
 
         return fecha;
     }
+    public static LocalDate validarFechaFutura(String pFecha) throws AppException{
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate fecha;
+
+        try {
+            fecha = LocalDate.parse(pFecha, formatter);
+            LocalDate hoy = LocalDate.now();
+        }
+        catch (DateTimeParseException e) {
+            // La fecha no está en el formato correcto o es inválida
+            throw new AppException("El formato de la fecha no es válido");
+        }
+        return fecha;
+    }
 
 }

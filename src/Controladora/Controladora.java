@@ -1025,7 +1025,7 @@ public class Controladora {
         do {
             try {
                 String fechaEntradaStr = scanner.nextLine().trim();
-                fechaEntrada = Utilidades.validarFecha(fechaEntradaStr);
+                fechaEntrada = Utilidades.validarFechaFutura(fechaEntradaStr);
             } catch (AppException e) {
                 System.out.println(e.getMessage());
             }
@@ -1036,7 +1036,7 @@ public class Controladora {
         do {
             try {
                 String fechaSalidaStr = scanner.nextLine().trim();
-                fechaSalida = Utilidades.validarFecha(fechaSalidaStr);
+                fechaSalida = Utilidades.validarFechaFutura(fechaSalidaStr);
             } catch (AppException e) {
                 System.out.println(e.getMessage());
             }
@@ -1140,7 +1140,7 @@ public class Controladora {
             String fechaEntradaStr = scanner.nextLine();
             if (!fechaEntradaStr.isEmpty()) {
                 try {
-                    LocalDate nuevaFechaEntrada = Utilidades.validarFecha(fechaEntradaStr);
+                    LocalDate nuevaFechaEntrada = Utilidades.validarFechaFutura(fechaEntradaStr);
                     if (nuevaFechaEntrada.isBefore(r.getFechaReserva())) {
                         throw new AppException("La fecha de entrada no puede ser anterior a la fecha de reserva.");
                     }
@@ -1154,7 +1154,7 @@ public class Controladora {
             String fechaSalidaStr = scanner.nextLine();
             if (!fechaSalidaStr.isEmpty()) {
                 try {
-                    LocalDate nuevaFechaSalida = Utilidades.validarFecha(fechaSalidaStr);
+                    LocalDate nuevaFechaSalida = Utilidades.validarFechaFutura(fechaSalidaStr);
                     if (nuevaFechaSalida.isBefore(r.getFechaEntrada())) {
                         throw new AppException("La fecha de salida no puede ser anterior a la fecha de entrada.");
                     }
@@ -1231,7 +1231,7 @@ public class Controladora {
         do {
             try {
                 String fechaInicioStr = scanner.nextLine().trim();
-                fechaInicio = Utilidades.validarFecha(fechaInicioStr);
+                fechaInicio = Utilidades.validarFechaFutura(fechaInicioStr);
             } catch (AppException e) {
                 System.out.println(e.getMessage());
             }
@@ -1242,7 +1242,7 @@ public class Controladora {
         do {
             try {
                 String fechaFinStr = scanner.nextLine().trim();
-                fechaFin = Utilidades.validarFecha(fechaFinStr);
+                fechaFin = Utilidades.validarFechaFutura(fechaFinStr);
                 if (fechaFin.isBefore(fechaInicio)) {
                     throw new AppException("La fecha de fin no puede ser anterior a la fecha de inicio.");
                 }
@@ -1291,7 +1291,7 @@ public class Controladora {
             String fechaInicioStr = scanner.nextLine();
             if (!fechaInicioStr.isEmpty()) {
                 try {
-                    t.setFechaInicio(Utilidades.validarFecha(fechaInicioStr));
+                    t.setFechaInicio(Utilidades.validarFechaFutura(fechaInicioStr));
                 } catch (AppException e) {
                     System.out.println(e.getMessage() + " Manteniendo la fecha de inicio actual.");
                 }
@@ -1302,7 +1302,7 @@ public class Controladora {
             String fechaFinStr = scanner.nextLine();
             if (!fechaFinStr.isEmpty()) {
                 try {
-                    LocalDate nuevaFechaFin = Utilidades.validarFecha(fechaFinStr);
+                    LocalDate nuevaFechaFin = Utilidades.validarFechaFutura(fechaFinStr);
                     if (nuevaFechaFin.isBefore(t.getFechaInicio())) {
                         throw new AppException("La fecha de fin no puede ser anterior a la fecha de inicio.");
                     }

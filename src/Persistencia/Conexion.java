@@ -1,5 +1,7 @@
 package Persistencia;
 
+import Utils.AppSQLException;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -14,7 +16,7 @@ public class Conexion {
         return "jdbc:mysql://localhost:3306/obligatorio1?user=root&password=root";
     }
 
-    public boolean consulta(String sql, List<Object> parametros) {
+    public boolean consulta(String sql, List<Object> parametros) throws AppSQLException{
         try (Connection conexion = DriverManager.getConnection(getCadenaDeConexion());
              PreparedStatement comando = conexion.prepareStatement(sql)) {
 
@@ -29,11 +31,11 @@ public class Conexion {
             comando.executeUpdate();
             return true;
         } catch (SQLException e) {
-            throw new RuntimeException("Error en Persistencia.Conexion.consulta, sql = " + sql, e);
+            throw new AppSQLException("Error ejecutando consulta", e);
         }
     }
 
-    public List<List<Object>> seleccion(String sql, List<Object> parametros) {
+    public List<List<Object>> seleccion(String sql, List<Object> parametros) throws AppSQLException{
         List<List<Object>> resultado = new ArrayList<>();
 
         try (Connection conexion = DriverManager.getConnection(getCadenaDeConexion());
@@ -61,7 +63,7 @@ public class Conexion {
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Error en Persistencia.Conexion.seleccion, sql = " + sql, e);
+            throw new AppSQLException("Error ejecutando consulta", e);
         }
 
         return resultado;
